@@ -6,7 +6,8 @@ on:
     tags: [ "v*" ]  # Trigger the workflow on tag pushes that match the 'v*' pattern (e.g., v1.0.0)
   pull_request:
     branches: [ "main" ]
-
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
