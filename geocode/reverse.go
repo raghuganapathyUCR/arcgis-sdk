@@ -1,9 +1,9 @@
 package geocode
 
 import (
-	"arcgis-sdk/auth"
-	"arcgis-sdk/requests"
-	"arcgis-sdk/utils"
+	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
+	"github.com/raghuganapathyUCR/arcgis-sdk/requests"
+	"github.com/raghuganapathyUCR/arcgis-sdk/utils"
 	"encoding/json"
 	"errors"
 	"fmt"

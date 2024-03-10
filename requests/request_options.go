@@ -1,6 +1,6 @@
 package requests
 
-import "arcgis-sdk/auth"
+import "github.com/raghuganapathyUCR/arcgis-sdk/auth"
 
 type ResponseFormat string
 type HTTPMethod string

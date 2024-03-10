@@ -1,4 +1,4 @@
-module arcgis-sdk
+module github.com/raghuganapathyUCR/arcgis-sdk
 
 go 1.21.3
 

@@ -1,7 +1,7 @@
 package geocode
 
 import (
-	"arcgis-sdk/auth"
+	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
 	"os"
 	"testing"
 
