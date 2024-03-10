@@ -108,7 +108,6 @@ func (g *ReverseGeocoder) ReverseGeocode(coords interface{}) (ReverseGeocodeResp
 	if err != nil {
 		return ReverseGeocodeResponse{}, err
 	}
-
 	// Check for server errors, which are returned in the 200 response
 	if err := json.Unmarshal([]byte(response), &errorResponse); err == nil && errorResponse.Error.Code != 0 {
 		return ReverseGeocodeResponse{}, fmt.Errorf("server error: %s (code %d)", errorResponse.Error.Message, errorResponse.Error.Code)

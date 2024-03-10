@@ -174,7 +174,6 @@ func (g *Geocoder) requestGeocodeService(url string, params map[string]string) (
 		return GeocodeResponse{}, err
 	}
 
-
 	if err := json.Unmarshal([]byte(resp), &errorResponse); err == nil && errorResponse.Error.Code != 0 {
 		return GeocodeResponse{}, fmt.Errorf("server error: %s (code %d)", errorResponse.Error.Message, errorResponse.Error.Code)
 	}

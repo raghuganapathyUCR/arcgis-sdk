@@ -5,7 +5,6 @@ import (
 	"arcgis-sdk/geocode" // Path: ../../api/geocode/geocode.go
 	"encoding/json"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -25,14 +24,7 @@ func testGeocoder(AUTH auth.AuthenticationManager) {
 		    postal: "92373",
 	*/
 
-	address := geocode.GeocodeRequestOptions{
-		// Address:   "380 New York St",
-		// City:      "Redlands",
-		// Region:    "CA",
-		// Postal:    "92373",
-		// OutFields: []string{"*"},
-		SingleLine: "1600 Pennsylvania Ave NW, Washington, DC",
-	}
+	address := geocode.GeocodeRequestOptions{}
 
 	// addr := "Starbucks"
 	start := time.Now()
@@ -49,9 +41,11 @@ func testGeocoder(AUTH auth.AuthenticationManager) {
 }
 
 func testReverseGeocoder(AUTH auth.AuthenticationManager) {
-	point := geocode.Location{
-		Latitude:  34.0564,
-		Longitude: -117.1956,
+	point := geocode.Point{
+		// X: -117.1956,
+		// Y: 34.0564,
+		X: -17.1956,
+		Y: 4.0564,
 	}
 
 	revGeocoder, _ := geocode.NewReverseGeocoder(AUTH)
@@ -71,7 +65,8 @@ func main() {
 		return
 	}
 
-	var AUTH = auth.NewApiKeyManager(os.Getenv("ARCGIS_KEY"))
+	var AUTH = auth.NewApiKeyManager("S")
 
-	testGeocoder(AUTH)
+	// testGeocoder(AUTH)
+	testReverseGeocoder(AUTH)
 }
