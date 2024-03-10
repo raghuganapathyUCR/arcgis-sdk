@@ -37,6 +37,50 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
+func TestReverseGeocoder_ReverseGeocodeInvalidLocation(t *testing.T) {
+
+	_, err := revGeocoder.ReverseGeocode([]float64{34.0564, -117.1956, 0.0, 0.0})
+	if err == nil {
+		t.Errorf("Expected an error with an invalid location")
+	}
+}
+
+func TestReverseGeocoder_ReverseGeocode3sizeLocation(t *testing.T) {
+
+	_, err := revGeocoder.ReverseGeocode([]float64{34.0564, -117.1956, 0.0})
+	if err != nil {
+		t.Errorf("Expected an error with a valid 3 size location")
+	}
+}
+
+// test w 2 size location
+func TestReverseGeocoder_ReverseGeocode2sizeLocation(t *testing.T) {
+
+	_, err := revGeocoder.ReverseGeocode([]float64{34.0564, -117.1956})
+	if err != nil {
+		t.Errorf("Expected an error with a valid 2 size location")
+	}
+}
+
+// test Point
+func TestReverseGeocoder_ReverseGeocodePoint(t *testing.T) {
+
+	_, err := revGeocoder.ReverseGeocode(Point{X: -117.1956, Y: 34.0564})
+	if err != nil {
+		t.Errorf("Expected an error with a valid Point")
+	}
+}
+
+// test location with z
+func TestReverseGeocoder_ReverseGeocodeLocationWithZ(t *testing.T) {
+
+	_, err := revGeocoder.ReverseGeocode(Location{Latitude: 34.0564, Longitude: -117.1956, Z: 0.0})
+	if err != nil {
+		t.Errorf("Expected an error with a valid location with z")
+	}
+}
+
+
 func TestReverseGeocoder_ReverseGeocode(t *testing.T) {
 
 	// Define a test location
@@ -92,10 +136,3 @@ func TestGeocoder_GeocodeInvalidApiKey(t *testing.T) {
 	}
 }
 
-func TestReverseGeocoder_ReverseGeocodeInvalidLocation(t *testing.T) {
-
-	_, err := revGeocoder.ReverseGeocode([]float64{34.0564, -117.1956, 0.0, 0.0})
-	if err == nil {
-		t.Errorf("Expected an error with an invalid location")
-	}
-}
