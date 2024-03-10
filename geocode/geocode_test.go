@@ -74,8 +74,7 @@ func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
 		}
 	}
 
-	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_KEY"))
-
+	authManager := auth.NewApiKeyManager(apiKey)
 	geocoder, _ := NewGeocoder(authManager)
 
 	r, err := geocoder.Geocode(GeocodeRequestOptions{})
