@@ -19,9 +19,9 @@ func TestGeocoder_Geocode(t *testing.T) {
 		if err := godotenv.Load("../../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
-		apiKey = os.Getenv("ARCGIS_API_KEY")
+		apiKey = os.Getenv("ARCGIS_KEY")
 		if apiKey == "" {
-			t.Fatal("ARCGIS_API_KEY environment variable not set")
+			t.Fatal("ARCGIS_KEY environment variable not set")
 		}
 	}
 
@@ -69,13 +69,13 @@ func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
 		if err := godotenv.Load("../../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
-		apiKey = os.Getenv("ARCGIS_API_KEY")
+		apiKey = os.Getenv("ARCGIS_KEY")
 		if apiKey == "" {
-			t.Fatal("ARCGIS_API_KEY environment variable not set")
+			t.Fatal("ARCGIS_KEY environment variable not set")
 		}
 	}
 
-	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_API_KEY"))
+	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_KEY"))
 
 	geocoder, _ := NewGeocoder(authManager)
 
@@ -98,13 +98,13 @@ func TestGeocoder_GeocodeInvalidAddress(t *testing.T) {
 		if err := godotenv.Load("../../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
-		apiKey = os.Getenv("ARCGIS_API_KEY")
+		apiKey = os.Getenv("ARCGIS_KEY")
 		if apiKey == "" {
-			t.Fatal("ARCGIS_API_KEY environment variable not set")
+			t.Fatal("ARCGIS_KEY environment variable not set")
 		}
 	}
 
-	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_API_KEY"))
+	authManager := auth.NewApiKeyManager(apiKey)
 
 	geocoder, _ := NewGeocoder(authManager)
 
