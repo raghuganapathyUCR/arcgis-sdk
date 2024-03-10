@@ -45,22 +45,6 @@ type Location struct {
 	Z         float64 `json:"z,omitempty"`
 }
 
-func isLocationArray(coords interface{}) bool {
-	switch c := coords.(type) {
-	case []float64:
-		length := len(c)
-		return length == 2 || length == 3
-	default:
-		return false
-	}
-}
-
-// IsLocation checks if the coordinates represent a Location.
-func isLocation(coords interface{}) bool {
-	_, ok := coords.(Location)
-	return ok
-}
-
 type ReverseGeocoder struct {
 	Authentication auth.AuthenticationManager
 }
