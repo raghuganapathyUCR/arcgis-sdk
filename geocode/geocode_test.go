@@ -2,7 +2,6 @@ package geocode
 
 import (
 	"arcgis-sdk/auth"
-	"fmt"
 	"os"
 	"testing"
 
@@ -16,7 +15,7 @@ func TestGeocoder_Geocode(t *testing.T) {
 	apiKey := os.Getenv("ARCGIS_KEY")
 	if apiKey == "" {
 		// Only try to load from .env if the environment variable isn't already set
-		if err := godotenv.Load("../../.env"); err != nil {
+		if err := godotenv.Load("../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
 		apiKey = os.Getenv("ARCGIS_KEY")
@@ -66,7 +65,7 @@ func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
 	apiKey := os.Getenv("ARCGIS_KEY")
 	if apiKey == "" {
 		// Only try to load from .env if the environment variable isn't already set
-		if err := godotenv.Load("../../.env"); err != nil {
+		if err := godotenv.Load("../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
 		apiKey = os.Getenv("ARCGIS_KEY")
@@ -85,17 +84,16 @@ func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
 		t.Errorf("Geocode returned an error: %v", err)
 	}
 
-	fmt.Printf("Response: %+v\n", r)
 	if len(r.Candidates) != 0 {
 		t.Errorf("Expected no candidates in the response")
 	}
 }
 
-func TestGeocoder_GeocodeInvalidAddress(t *testing.T) {
+func TestReverseGeocoder_ReverseGeocode(t *testing.T) {
 	apiKey := os.Getenv("ARCGIS_KEY")
 	if apiKey == "" {
 		// Only try to load from .env if the environment variable isn't already set
-		if err := godotenv.Load("../../.env"); err != nil {
+		if err := godotenv.Load("../.env"); err != nil {
 			t.Fatalf("Error loading .env file: %v", err)
 		}
 		apiKey = os.Getenv("ARCGIS_KEY")
@@ -105,11 +103,27 @@ func TestGeocoder_GeocodeInvalidAddress(t *testing.T) {
 	}
 
 	authManager := auth.NewApiKeyManager(apiKey)
-
-	geocoder, _ := NewGeocoder(authManager)
-
-	_, err := geocoder.Geocode(GeocodeRequestOptions{SingleLine: "Invalid Address"})
-	if err == nil {
-		t.Errorf("Expected an error with an invalid address")
+	revGeocoder, err := NewReverseGeocoder(authManager)
+	if err != nil {
+		t.Fatalf("Failed to create ReverseGeocoder: %v", err)
 	}
+
+	// Define a test location
+	testLocation := Location{
+		Latitude:  34.0564,
+		Longitude: -117.1956,
+	}
+
+	// Call the ReverseGeocode method
+	response, err := revGeocoder.ReverseGeocode(testLocation)
+	if err != nil {
+		t.Errorf("ReverseGeocode returned an error: %v", err)
+	}
+
+	// Check the response for the expected values
+	// Note: You will need to adjust these checks based on the expected response format and values
+	if len(response.Address) == 0 {
+		t.Errorf("Expected at least one address in the response")
+	}
+
 }

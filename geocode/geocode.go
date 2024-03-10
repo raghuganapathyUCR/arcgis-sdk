@@ -174,22 +174,12 @@ func (g *Geocoder) requestGeocodeService(url string, params map[string]string) (
 		return GeocodeResponse{}, err
 	}
 
-	var errorResponse struct {
-		Error struct {
-			Code    int      `json:"code"`
-			Message string   `json:"message"`
-			Details []string `json:"details"`
-		} `json:"error"`
-	}
+
 	if err := json.Unmarshal([]byte(resp), &errorResponse); err == nil && errorResponse.Error.Code != 0 {
 		return GeocodeResponse{}, fmt.Errorf("server error: %s (code %d)", errorResponse.Error.Message, errorResponse.Error.Code)
 	}
-	// Continue with the error check
-	if errorResponse.Error.Code == 498 {
-		return GeocodeResponse{}, errors.New("invalid token")
-	}
 
-	// Unmarshal the response into the GeocodeResponse struct
+	// Unmarshal the response into the GeocodeResponse struct if no errors occurred
 	var geocodeResponse GeocodeResponse
 	if err := json.Unmarshal([]byte(resp), &geocodeResponse); err != nil {
 		return GeocodeResponse{}, fmt.Errorf("error unmarshalling response: %v", err)
