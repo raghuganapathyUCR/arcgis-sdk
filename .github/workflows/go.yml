@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ "raghug/init" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "raghug/init" ]
+    branches: [ "main" ]
 
 jobs:
   build:
