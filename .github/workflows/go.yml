@@ -19,6 +19,8 @@ jobs:
         run: go build -v ./...
       - name: Test with Coverage
         run: go test -v -coverpkg=./... -coverprofile=coverage.out ./...
+        env: # Set the environment variable for the test
+          ARCGIS_KEY: ${{ secrets.ARGCIS_KEY }}
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4.0.1
         with:

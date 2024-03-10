@@ -12,15 +12,20 @@ import (
 // load environment variables using godotenv
 
 func TestGeocoder_Geocode(t *testing.T) {
-	// load environment variables using godotenv
-	if err := godotenv.Load("../../.env"); err != nil {
 
-		fmt.Printf("Error loading .env file: %v\n", err)
-		return
+	apiKey := os.Getenv("ARCGIS_KEY")
+	if apiKey == "" {
+		// Only try to load from .env if the environment variable isn't already set
+		if err := godotenv.Load("../../.env"); err != nil {
+			t.Fatalf("Error loading .env file: %v", err)
+		}
+		apiKey = os.Getenv("ARCGIS_API_KEY")
+		if apiKey == "" {
+			t.Fatal("ARCGIS_API_KEY environment variable not set")
+		}
 	}
 
-	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_API_KEY"))
-
+	authManager := auth.NewApiKeyManager(apiKey)
 	// Create a new Geocoder instance
 	geocoder, err := NewGeocoder(authManager)
 	if err != nil {
@@ -47,6 +52,7 @@ func TestGeocoder_Geocode(t *testing.T) {
 	// Add more checks as needed
 }
 func TestGeocoder_GeocodeInvalidApiKey(t *testing.T) {
+
 	authManager := auth.NewApiKeyManager("invalid-api-key")
 	geocoder, _ := NewGeocoder(authManager)
 
@@ -57,10 +63,16 @@ func TestGeocoder_GeocodeInvalidApiKey(t *testing.T) {
 }
 
 func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
-	if err := godotenv.Load("../../.env"); err != nil {
-
-		fmt.Printf("Error loading .env file: %v\n", err)
-		return
+	apiKey := os.Getenv("ARCGIS_KEY")
+	if apiKey == "" {
+		// Only try to load from .env if the environment variable isn't already set
+		if err := godotenv.Load("../../.env"); err != nil {
+			t.Fatalf("Error loading .env file: %v", err)
+		}
+		apiKey = os.Getenv("ARCGIS_API_KEY")
+		if apiKey == "" {
+			t.Fatal("ARCGIS_API_KEY environment variable not set")
+		}
 	}
 
 	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_API_KEY"))
@@ -80,11 +92,16 @@ func TestGeocoder_GeocodeEmptyAddress(t *testing.T) {
 }
 
 func TestGeocoder_GeocodeInvalidAddress(t *testing.T) {
-	// load environment variables using godotenv
-	if err := godotenv.Load("../../.env"); err != nil {
-
-		fmt.Printf("Error loading .env file: %v\n", err)
-		return
+	apiKey := os.Getenv("ARCGIS_KEY")
+	if apiKey == "" {
+		// Only try to load from .env if the environment variable isn't already set
+		if err := godotenv.Load("../../.env"); err != nil {
+			t.Fatalf("Error loading .env file: %v", err)
+		}
+		apiKey = os.Getenv("ARCGIS_API_KEY")
+		if apiKey == "" {
+			t.Fatal("ARCGIS_API_KEY environment variable not set")
+		}
 	}
 
 	authManager := auth.NewApiKeyManager(os.Getenv("ARCGIS_API_KEY"))
