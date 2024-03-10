@@ -111,7 +111,6 @@ func makeRequest(requestURL string, options RequestOptions) ([]byte, error) {
 
 	// Read the response body
 	body, err := io.ReadAll(resp.Body)
-	fmt.Print(string(body))
 	if err != nil {
 		return []byte{}, fmt.Errorf("error reading response body: %v", err)
 	}

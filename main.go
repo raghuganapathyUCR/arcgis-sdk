@@ -3,6 +3,7 @@ package main
 import (
 	"arcgis-sdk/auth"    // Path: ../../api/auth/auth.go
 	"arcgis-sdk/geocode" // Path: ../../api/geocode/geocode.go
+	"encoding/json"
 	"fmt"
 	"os"
 	"time"
@@ -24,26 +25,31 @@ func main() {
 		return
 	}
 
-	// address := geocode.MultiLineAddress{
-	// 	Address:     "306 Phase 3",
-	// 	Address2:    "Golden Park Apartments",
-	// 	Address3:    "Devarachikkanahalli Main Road",
-	// 	City:        "Bangalore",
-	// 	Region:      "Karnataka",
-	// 	Postal:      "560076",
-	// 	CountryCode: "IND",
-	// 	OutFields:   []string{"PlaceName"},
-	// }
+	/*
+			address: "380 New York St",
+		    city: "Redlands",
+		    region: "CA",
+		    postal: "92373",
+	*/
 
-	// t, _ := json.Marshal(address)
-	addr := "Starbucks"
+	address := geocode.GeocodeRequestOptions{
+		Address:   "380 New York St",
+		City:      "Redlands",
+		Region:    "CA",
+		Postal:    "92373",
+		OutFields: []string{"*"},
+	}
+
+	// addr := "Starbucks"
 	start := time.Now()
-	r, err := geocoder.Geocode(addr, false)
+	r, err := geocoder.Geocode(address)
 	sinec := time.Since(start)
 	fmt.Println("Time taken to geocode addr: ", sinec)
 	if err != nil {
 		fmt.Println("MainError: ", err)
 		return
 	}
-	fmt.Printf("\nAddress: %+v", r)
+	q, _ := json.MarshalIndent(r, "", "  ")
+
+	fmt.Printf("\n Result: %+s", q)
 }
