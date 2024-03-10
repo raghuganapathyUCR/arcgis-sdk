@@ -139,8 +139,6 @@ func (g *Geocoder) Geocode(address GeocodeRequestOptions) (GeocodeResponse, erro
 
 func (g *Geocoder) findAddressCandidatesMultiLine(address GeocodeRequestOptions) (GeocodeResponse, error) {
 	url := fmt.Sprintf("%s/findAddressCandidates", utils.CleanURL(ARCGIS_ONLINE_GEOCODING_URL))
-	// address in this case is a string that represents a JSON object
-	// so we need to unmarshal it into a MultiLineAddress struct
 
 	params := map[string]string{
 		"singleLine":   address.SingleLine,
@@ -171,13 +169,31 @@ func (g *Geocoder) requestGeocodeService(url string, params map[string]string) (
 	}
 	resp, err := requests.Request(url, &requestOptions)
 
+	// print the response to understand how the server responds when errors occur
 	if err != nil {
 		return GeocodeResponse{}, err
 	}
+
+	var errorResponse struct {
+		Error struct {
+			Code    int      `json:"code"`
+			Message string   `json:"message"`
+			Details []string `json:"details"`
+		} `json:"error"`
+	}
+	if err := json.Unmarshal([]byte(resp), &errorResponse); err == nil && errorResponse.Error.Code != 0 {
+		return GeocodeResponse{}, fmt.Errorf("server error: %s (code %d)", errorResponse.Error.Message, errorResponse.Error.Code)
+	}
+	// Continue with the error check
+	if errorResponse.Error.Code == 498 {
+		return GeocodeResponse{}, errors.New("invalid token")
+	}
+
+	// Unmarshal the response into the GeocodeResponse struct
 	var geocodeResponse GeocodeResponse
-	err = json.Unmarshal(resp, &geocodeResponse)
-	if err != nil {
-		return GeocodeResponse{}, err
+	if err := json.Unmarshal([]byte(resp), &geocodeResponse); err != nil {
+		return GeocodeResponse{}, fmt.Errorf("error unmarshalling response: %v", err)
 	}
+
 	return geocodeResponse, nil
 }

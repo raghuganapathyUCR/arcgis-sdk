@@ -81,7 +81,6 @@ func makeRequest(requestURL string, options RequestOptions) ([]byte, error) {
 		}
 
 		requestURL = fmt.Sprintf("%s?%s", requestURL, params.Encode())
-		fmt.Println(requestURL)
 		// Make the GET request
 		resp, err = http.Get(requestURL)
 
