@@ -1,12 +1,13 @@
 package geocode
 
 import (
-	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
-	"github.com/raghuganapathyUCR/arcgis-sdk/requests"
-	"github.com/raghuganapathyUCR/arcgis-sdk/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
+	"github.com/raghuganapathyUCR/arcgis-sdk/requests"
+	"github.com/raghuganapathyUCR/arcgis-sdk/utils"
 )
 
 const (

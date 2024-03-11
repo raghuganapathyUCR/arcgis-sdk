@@ -35,12 +35,10 @@ type RequestOptions struct {
 	SuppressWarnings bool                       `json:"suppressWarnings,omitempty"`
 }
 
-
-
 func getDefaultRequestOptions() RequestOptions {
 	return RequestOptions{
 		HTTPMethod: POST,
-		Params:    map[string]string{
+		Params: map[string]string{
 			"f": string(JSON),
 		},
 	}

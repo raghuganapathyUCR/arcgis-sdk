@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/raghuganapathyUCR/arcgis-sdk/auth"    // Path: ../../api/auth/auth.go
-	"github.com/raghuganapathyUCR/arcgis-sdk/geocode" // Path: ../../api/geocode/geocode.go
-
 	"github.com/joho/godotenv"
+	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
+	"github.com/raghuganapathyUCR/arcgis-sdk/geocode"
 )
 
 func testGeocoder(AUTH auth.AuthenticationManager) {

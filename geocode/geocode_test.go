@@ -1,9 +1,10 @@
 package geocode
 
 import (
-	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
 	"os"
 	"testing"
+
+	"github.com/raghuganapathyUCR/arcgis-sdk/auth"
 
 	"github.com/joho/godotenv"
 )
@@ -80,7 +81,6 @@ func TestReverseGeocoder_ReverseGeocodeLocationWithZ(t *testing.T) {
 	}
 }
 
-
 func TestReverseGeocoder_ReverseGeocode(t *testing.T) {
 
 	// Define a test location
@@ -135,4 +135,3 @@ func TestGeocoder_GeocodeInvalidApiKey(t *testing.T) {
 		t.Errorf("Expected an error with an invalid API key")
 	}
 }
-
