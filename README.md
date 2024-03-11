@@ -258,6 +258,4 @@ This project is protected under the [MIT](LICSENSE.md) License. For more details
 
 - Many thanks to [ESRI](https://www.esri.com) for their [arcgis-rest-js](https://github.com/esri/arcgis-rest-js/) project, which inspired this SDK.
 
-[**Return**](#-overview)
-
 ---
